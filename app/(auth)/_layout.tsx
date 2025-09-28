@@ -10,6 +10,13 @@ export default function AuthLayout() {
           title: 'Iniciar Sesión'
         }} 
       />
+      <Stack.Screen 
+        name="registro" 
+        options={{headerShown: false,
+           title: 'Registro'
+          }} 
+      />
     </Stack>
+    
   );
 }

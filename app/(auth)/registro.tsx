@@ -2,7 +2,7 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-export default function LoginScreen() {
+export default function SignupScreen() {
   return (
     <View style={styles.container}>
       {/* Logo con texto */}
@@ -36,15 +36,22 @@ export default function LoginScreen() {
         </View>
       </View>
 
-      {/* Formulario */}
+      {/* Formulario de Registro */}
       <View style={styles.form}>
-        <Text style={styles.title}>Bienvenido de Nuevo 👋</Text>
-        <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
+        <Text style={styles.title}>Crea tu Cuenta ✨</Text>
+        <Text style={styles.subtitle}>Regístrate para comenzar</Text>
 
+        <TextInput
+          placeholder="Nombre completo"
+          placeholderTextColor="#999"
+          style={styles.input}
+        />
         <TextInput
           placeholder="Correo electrónico"
           placeholderTextColor="#999"
           style={styles.input}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="Contraseña"
@@ -52,32 +59,23 @@ export default function LoginScreen() {
           secureTextEntry
           style={styles.input}
         />
+        <TextInput
+          placeholder="Confirmar contraseña"
+          placeholderTextColor="#999"
+          secureTextEntry
+          style={styles.input}
+        />
 
-        <TouchableOpacity style={styles.signInButton}>
-          <Text style={styles.signInButtonText}>Iniciar</Text>
+        <TouchableOpacity style={styles.signUpButton}>
+          <Text style={styles.signUpButtonText}>Registrarse</Text>
         </TouchableOpacity>
 
-        {/* Separador */}
-        <View style={styles.separatorContainer}>
-          <View style={styles.separator} />
-          <Text style={styles.separatorText}>o</Text>
-          <View style={styles.separator} />
-        </View>
 
-        {/* Botón de Google */}
-        <TouchableOpacity style={styles.googleButton}>
-          <Image
-            source={require("@/assets/images/google-icon.webp")}
-            style={styles.googleIcon}
-          />
-          <Text style={styles.googleButtonText}>Continua con Google</Text>
-        </TouchableOpacity>
-
-        {/* Link a Sign Up */}
+        {/* Link a Login */}
         <Text style={styles.footerText}>
-          ¿No tienes una cuenta?{" "}
-          <Link href="/registro" style={styles.link}>
-            Registrarse
+          ¿Ya tienes una cuenta?{" "}
+          <Link href="/login" style={styles.link}>
+            Inicia sesión
           </Link>
         </Text>
       </View>
@@ -93,7 +91,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
 
-  
   logoContainer: {
     alignItems: "center",
     marginBottom: 20,
@@ -109,7 +106,6 @@ const styles = StyleSheet.create({
     color: "#2D6CDF",
     marginTop: 6,
   },
-
 
   overlappingCircles: {
     width: "100%",
@@ -150,7 +146,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
-
   form: {
     backgroundColor: "#fff",
     padding: 20,
@@ -181,13 +176,13 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     color: "#333",
   },
-  signInButton: {
+  signUpButton: {
     backgroundColor: "#2D6CDF",
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
   },
-  signInButtonText: {
+  signUpButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
@@ -197,38 +192,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
-  },
-  separator: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#ddd",
-  },
-  separatorText: {
-    marginHorizontal: 10,
-    color: "#666",
-    fontSize: 13,
-  },
-  googleButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    paddingVertical: 12,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  googleIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
-    resizeMode: "contain",
-  },
-  googleButtonText: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#333",
   },
   footerText: {
     fontSize: 14,
