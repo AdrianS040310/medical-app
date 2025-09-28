@@ -8,7 +8,7 @@ export default function LoginScreen() {
       {/* Logo con texto */}
       <View style={styles.logoContainer}>
         <Image
-          source={require("@/assets/images/medical-logo.png")}
+          source={require("@/assets/images/medical-logo.webp")}
           style={styles.logo}
         />
         <Text style={styles.logoText}>Medical</Text>
@@ -18,19 +18,19 @@ export default function LoginScreen() {
       <View style={styles.overlappingCircles}>
         <View style={[styles.circle, styles.centerCircle]}>
           <Image
-            source={require("@/assets/images/doctor.png")}
+            source={require("@/assets/images/doctor.webp")}
             style={styles.circleImage}
           />
         </View>
         <View style={[styles.circle, styles.topLeftCircle]}>
           <Image
-            source={require("@/assets/images/hospital.png")}
+            source={require("@/assets/images/hospital.webp")}
             style={styles.circleImage}
           />
         </View>
         <View style={[styles.circle, styles.bottomRightCircle]}>
           <Image
-            source={require("@/assets/images/surgery.png")}
+            source={require("@/assets/images/surgery.webp")}
             style={styles.circleImage}
           />
         </View>
@@ -67,7 +67,7 @@ export default function LoginScreen() {
         {/* Botón de Google */}
         <TouchableOpacity style={styles.googleButton}>
           <Image
-            source={require("@/assets/images/google-icon.png")}
+            source={require("@/assets/images/google-icon.webp")}
             style={styles.googleIcon}
           />
           <Text style={styles.googleButtonText}>Continua con Google</Text>

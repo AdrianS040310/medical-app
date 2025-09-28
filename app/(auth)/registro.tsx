@@ -8,7 +8,7 @@ export default function SignupScreen() {
       {/* Logo con texto */}
       <View style={styles.logoContainer}>
         <Image
-          source={require("@/assets/images/medical-logo.png")}
+          source={require("@/assets/images/medical-logo.webp")}
           style={styles.logo}
         />
         <Text style={styles.logoText}>Medical</Text>
@@ -18,19 +18,19 @@ export default function SignupScreen() {
       <View style={styles.overlappingCircles}>
         <View style={[styles.circle, styles.centerCircle]}>
           <Image
-            source={require("@/assets/images/doctor.png")}
+            source={require("@/assets/images/doctor.webp")}
             style={styles.circleImage}
           />
         </View>
         <View style={[styles.circle, styles.topLeftCircle]}>
           <Image
-            source={require("@/assets/images/hospital.png")}
+            source={require("@/assets/images/hospital.webp")}
             style={styles.circleImage}
           />
         </View>
         <View style={[styles.circle, styles.bottomRightCircle]}>
           <Image
-            source={require("@/assets/images/surgery.png")}
+            source={require("@/assets/images/surgery.webp")}
             style={styles.circleImage}
           />
         </View>
