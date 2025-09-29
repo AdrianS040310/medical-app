@@ -6,7 +6,8 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { Image } from 'expo-image';
 import { Link, router } from 'expo-router';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ export default function LoginScreen() {
       const userInfo = await GoogleSignin.signIn();
 
       if (isSuccessResponse(userInfo)) {
-        const { user } = userInfo.data;
+        const { user, idToken } = userInfo.data;
         Alert.alert('¡Bienvenido! 🎉', `${user.name}\n${user.email}`);
       }
 
@@ -135,7 +136,11 @@ export default function LoginScreen() {
           <View style={styles.separator} />
         </View>
 
-        <TouchableOpacity style={styles.googleButton}>
+        <TouchableOpacity
+          style={styles.googleButton}
+          onPress={handleOAuth2Login}
+          disabled={loading}
+        >
           <Image source={require('@/assets/images/google-icon.webp')} style={styles.googleIcon} />
           <Text style={styles.googleButtonText}>Continua con Google</Text>
         </TouchableOpacity>
