@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.medicalapp.app"
     },
     "web": {
       "output": "static",
@@ -38,11 +39,23 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.1058831406641-0p33oqhq3turgrqmij6kjbdc21va0678"
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "74029ea5-8beb-462d-95b6-948b6de7d978"
+      }
     }
   }
 }
