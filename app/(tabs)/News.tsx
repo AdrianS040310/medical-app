@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -8,9 +8,9 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { getHealthNews } from "../services/Api";
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { getHealthNews } from '../services/Api';
 
 const HealthNewsScreen = () => {
   const [news, setNews] = useState<any[]>([]);
@@ -23,10 +23,10 @@ const HealthNewsScreen = () => {
 
     const result = await getHealthNews();
     if (result.success) {
-      setNews(result.articles.slice(0, 8)); // mostramos noticias
+      setNews(result.articles.slice(0, 8));
       setErrorMsg(null);
     } else {
-      setNews([]); // vaciamos noticias si hay error
+      setNews([]);
       setErrorMsg(result.error ?? null);
     }
     setLoading(false);
@@ -55,10 +55,7 @@ const HealthNewsScreen = () => {
               <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
                 <View style={styles.newsCard}>
                   {item.urlToImage && (
-                    <Image
-                      source={{ uri: item.urlToImage }}
-                      style={styles.newsImage}
-                    />
+                    <Image source={{ uri: item.urlToImage }} style={styles.newsImage} />
                   )}
                   <View style={{ flex: 1 }}>
                     <Text style={styles.newsTitle}>{item.title}</Text>
@@ -81,22 +78,22 @@ const HealthNewsScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#e1f2fd",
+    backgroundColor: '#e1f2fd',
   },
-  container: { flex: 1, padding: 20, backgroundColor: "#e1f2fd" },
+  container: { flex: 1, padding: 20, backgroundColor: '#e1f2fd' },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 15,
     marginTop: 10,
   },
   newsCard: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginVertical: 10,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: '#f9f9f9',
     borderRadius: 10,
     padding: 10,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
@@ -107,18 +104,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginRight: 12,
   },
-  newsTitle: { fontWeight: "bold", fontSize: 15 },
-  newsDesc: { fontSize: 13, color: "gray", marginTop: 3 },
+  newsTitle: { fontWeight: 'bold', fontSize: 15 },
+  newsDesc: { fontSize: 13, color: 'gray', marginTop: 3 },
   errorBox: {
-    backgroundColor: "#ffe6e6",
+    backgroundColor: '#ffe6e6',
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
   },
   errorText: {
-    color: "red",
-    fontWeight: "bold",
-    textAlign: "center",
+    color: 'red',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
