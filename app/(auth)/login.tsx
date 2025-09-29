@@ -1,3 +1,7 @@
+import { apiRequests } from '@/services/API/apiRequests';
+import { endpoints } from '@/services/API/endpoints';
+import { ExpoStorage } from '@/services/ExpoStorage';
+import { GoogleLoginRequest, LoginResponse } from '@/types/auth';
 import {
   GoogleSignin,
   isErrorWithCode,
@@ -57,7 +61,32 @@ export default function LoginScreen() {
 
       if (isSuccessResponse(userInfo)) {
         const { user, idToken } = userInfo.data;
-        Alert.alert('¡Bienvenido! 🎉', `${user.name}\n${user.email}`);
+
+        if (!idToken) {
+          Alert.alert('Error', 'No se pudo obtener el token de Google');
+          return;
+        }
+
+        const loginData: GoogleLoginRequest = {
+          idToken: idToken,
+        };
+
+        const responseApi = await apiRequests.post<LoginResponse>(
+          endpoints.usersEncryption.login(),
+          loginData,
+        );
+
+        if (responseApi.success && responseApi.data?.data) {
+          const { token: tokenJWT } = responseApi.data.data;
+
+          if (tokenJWT) {
+            await ExpoStorage.saveToken(tokenJWT);
+            router.push('/(tabs)');
+          }
+        } else {
+          const errorMessage = responseApi.error || 'Error al procesar la respuesta del servidor';
+          Alert.alert('Error', errorMessage);
+        }
       }
 
       // Aquí enviarías el token a tu backend

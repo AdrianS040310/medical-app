@@ -8,9 +8,7 @@ export interface ApiResponse<T = any> {
 }
 
 // Función genérica para manejar requests
-const handleRequest = async <T>(
-  request: Promise<any>
-): Promise<ApiResponse<T>> => {
+const handleRequest = async <T>(request: Promise<any>): Promise<ApiResponse<T>> => {
   try {
     const response = await request;
     return {
@@ -18,7 +16,6 @@ const handleRequest = async <T>(
       data: response.data,
     };
   } catch (error: any) {
-  
     return {
       success: false,
       error: error.response?.data?.message || error.message || 'Error desconocido',
