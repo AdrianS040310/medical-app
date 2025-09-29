@@ -1,0 +1,14 @@
+node_modules/
+
+dist/
+build/
+.expo/
+
+*.config.js
+
+npm-debug.log*
+yarn-debug.log*
+
+*.tmp
+*.temp
+*.log

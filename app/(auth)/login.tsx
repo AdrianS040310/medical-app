@@ -1,19 +1,12 @@
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 import {
   GoogleSignin,
   isErrorWithCode,
   isSuccessResponse,
   statusCodes,
-} from "@react-native-google-signin/google-signin";
-import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  Platform,
-  StyleSheet,
-  View,
-} from "react-native";
+} from '@react-native-google-signin/google-signin';
+import { Image } from 'expo-image';
+import { Link, router } from 'expo-router';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
@@ -25,10 +18,8 @@ export default function LoginScreen() {
   const configureGoogleSignIn = async () => {
     try {
       GoogleSignin.configure({
-        webClientId:
-          "1058831406641-i83rvsg53lbmtabob54821nrj76qenv1.apps.googleusercontent.com", // Web Client ID
-        iosClientId:
-          "1058831406641-0p33oqhq3turgrqmij6kjbdc21va0678.apps.googleusercontent.com",
+        webClientId: '1058831406641-i83rvsg53lbmtabob54821nrj76qenv1.apps.googleusercontent.com', // Web Client ID
+        iosClientId: '1058831406641-0p33oqhq3turgrqmij6kjbdc21va0678.apps.googleusercontent.com',
         offlineAccess: true,
         forceCodeForRefreshToken: true,
       });
@@ -48,7 +39,7 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       // Verificar Play Services (solo Android)
-      if (Platform.OS === "android") {
+      if (Platform.OS === 'android') {
         await GoogleSignin.hasPlayServices({
           showPlayServicesUpdateDialog: true,
         });
@@ -65,121 +56,250 @@ export default function LoginScreen() {
 
       if (isSuccessResponse(userInfo)) {
         const { user } = userInfo.data;
-        Alert.alert("¡Bienvenido! 🎉", `${user.name}\n${user.email}`);
+        Alert.alert('¡Bienvenido! 🎉', `${user.name}\n${user.email}`);
       }
 
       // Aquí enviarías el token a tu backend
       // await sendTokenToBackend(userInfo.idToken);
     } catch (error) {
-      let errorMessage = "Error al iniciar sesión";
+      let errorMessage = 'Error al iniciar sesión';
 
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.SIGN_IN_CANCELLED:
-            errorMessage = "Inicio de sesión cancelado";
+            errorMessage = 'Inicio de sesión cancelado';
             break;
           case statusCodes.IN_PROGRESS:
-            errorMessage = "Inicio de sesión en progreso";
+            errorMessage = 'Inicio de sesión en progreso';
             break;
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            errorMessage =
-              "Google Play Services no disponible o desactualizado";
+            errorMessage = 'Google Play Services no disponible o desactualizado';
             break;
-          case "DEVELOPER_ERROR":
+          case 'DEVELOPER_ERROR':
             errorMessage =
-              "Error de configuración. Verifica:\n- SHA-1 en GCP\n- google-services.json\n- Client IDs correctos";
+              'Error de configuración. Verifica:\n- SHA-1 en GCP\n- google-services.json\n- Client IDs correctos';
             break;
           default:
-            errorMessage = `Error: ${"Desconocido"}`;
+            errorMessage = `Error: ${'Desconocido'}`;
         }
       }
 
-      Alert.alert("Error", errorMessage);
+      Alert.alert('Error', errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.content}>
-        <ThemedText type="title" style={styles.title}>
-          App Medica
-        </ThemedText>
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image source={require('@/assets/images/medical-logo.webp')} style={styles.logo} />
+        <Text style={styles.logoText}>Medical</Text>
+      </View>
 
-        <ThemedText type="subtitle" style={styles.subtitle}>
-          Inicia sesión para continuar
-        </ThemedText>
-
-        <View style={styles.buttonContainer}>
-          <ThemedView
-            style={[styles.loginButton, loading && styles.loginButtonDisabled]}
-            onTouchEnd={loading ? undefined : handleOAuth2Login}
-          >
-            {loading ? (
-              <ActivityIndicator color="white" size="small" />
-            ) : (
-              <ThemedText style={styles.buttonText}>
-                Iniciar Sesión con Google
-              </ThemedText>
-            )}
-          </ThemedView>
+      <View style={styles.overlappingCircles}>
+        <View style={[styles.circle, styles.centerCircle]}>
+          <Image source={require('@/assets/images/doctor.webp')} style={styles.circleImage} />
+        </View>
+        <View style={[styles.circle, styles.topLeftCircle]}>
+          <Image source={require('@/assets/images/hospital.webp')} style={styles.circleImage} />
+        </View>
+        <View style={[styles.circle, styles.bottomRightCircle]}>
+          <Image source={require('@/assets/images/surgery.webp')} style={styles.circleImage} />
         </View>
       </View>
-    </ThemedView>
+
+      <View style={styles.form}>
+        <Text style={styles.title}>Bienvenido de Nuevo 👋</Text>
+        <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
+
+        <TextInput
+          placeholder="Correo electrónico"
+          placeholderTextColor="#999"
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Contraseña"
+          placeholderTextColor="#999"
+          secureTextEntry
+          style={styles.input}
+        />
+
+        <TouchableOpacity style={styles.signInButton} onPress={() => router.push('/(tabs)')}>
+          <Text style={styles.signInButtonText}>Iniciar</Text>
+        </TouchableOpacity>
+
+        <View style={styles.separatorContainer}>
+          <View style={styles.separator} />
+          <Text style={styles.separatorText}>o</Text>
+          <View style={styles.separator} />
+        </View>
+
+        <TouchableOpacity style={styles.googleButton}>
+          <Image source={require('@/assets/images/google-icon.webp')} style={styles.googleIcon} />
+          <Text style={styles.googleButtonText}>Continua con Google</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.footerText}>
+          ¿No tienes una cuenta?{' '}
+          <Link href="/registro" style={styles.link}>
+            Registrarse
+          </Link>
+        </Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    backgroundColor: '#F9FCFF',
+    paddingHorizontal: 24,
+    paddingTop: 60,
   },
-  content: {
-    width: "100%",
-    maxWidth: 400,
-    alignItems: "center",
+
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logo: {
+    width: 150,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  logoText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2D6CDF',
+    marginTop: 6,
+  },
+
+  overlappingCircles: {
+    width: '100%',
+    height: 180,
+    position: 'relative',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  circle: {
+    position: 'absolute',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: 'hidden',
+    backgroundColor: '#eee',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  circleImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  centerCircle: {
+    top: 40,
+    zIndex: 2,
+  },
+  topLeftCircle: {
+    left: 40,
+    top: 0,
+    zIndex: 1,
+  },
+  bottomRightCircle: {
+    right: 40,
+    top: 100,
+    zIndex: 1,
+  },
+
+  form: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 3,
   },
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 6,
   },
   subtitle: {
-    fontSize: 18,
-    marginBottom: 40,
-    textAlign: "center",
-    opacity: 0.7,
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#666',
+    marginBottom: 20,
   },
-  buttonContainer: {
-    width: "100%",
-  },
-  loginButton: {
-    backgroundColor: "#4285F4",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+  input: {
+    backgroundColor: '#F1F4F9',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 50,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    fontSize: 14,
+    marginBottom: 14,
+    color: '#333',
   },
-  loginButtonDisabled: {
-    opacity: 0.6,
+  signInButton: {
+    backgroundColor: '#2D6CDF',
+    paddingVertical: 14,
+    borderRadius: 10,
+    marginBottom: 20,
   },
-  buttonText: {
-    color: "white",
+  signInButtonText: {
+    color: '#fff',
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  separatorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  separator: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#ddd',
+  },
+  separatorText: {
+    marginHorizontal: 10,
+    color: '#666',
+    fontSize: 13,
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  googleIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+    resizeMode: 'contain',
+  },
+  googleButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#333',
+  },
+  footerText: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#333',
+  },
+  link: {
+    color: '#2D6CDF',
+    fontWeight: '600',
   },
 });
