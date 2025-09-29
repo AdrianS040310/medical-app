@@ -1,0 +1,186 @@
+{
+  "tips": [
+    {
+      "id": 1,
+      "title": "Hidratación Adecuada 💧",
+      "message": "Bebe al menos 8 vasos de agua al día. La hidratación mejora el rendimiento cognitivo y mantiene tu cuerpo funcionando óptimamente.",
+      "category": "hidratacion"
+    },
+    {
+      "id": 2,
+      "title": "Descanso y Sueño 😴",
+      "message": "Duerme entre 7-9 horas cada noche. Un buen descanso es fundamental para tu salud mental y física.",
+      "category": "sueno"
+    },
+    {
+      "id": 3,
+      "title": "Actividad Física 🏃‍♀️",
+      "message": "Realiza al menos 30 minutos de ejercicio moderado diario. Tu corazón y mente te lo agradecerán.",
+      "category": "ejercicio"
+    },
+    {
+      "id": 4,
+      "title": "Alimentación Balanceada 🥗",
+      "message": "Incluye frutas, verduras, proteínas y grasas saludables en cada comida. Tu cuerpo necesita nutrientes variados.",
+      "category": "nutricion"
+    },
+    {
+      "id": 5,
+      "title": "Control de Estrés 🧘‍♀️",
+      "message": "Practica técnicas de relajación como meditación o respiración profunda. El estrés crónico daña tu salud.",
+      "category": "estres"
+    },
+    {
+      "id": 6,
+      "title": "Higiene Personal 🧽",
+      "message": "Lávate las manos frecuentemente y mantén una buena higiene dental. Previene enfermedades infecciosas.",
+      "category": "higiene"
+    },
+    {
+      "id": 7,
+      "title": "Chequeos Médicos 🩺",
+      "message": "No olvides tus revisiones médicas anuales. La prevención es la mejor medicina.",
+      "category": "prevencion"
+    },
+    {
+      "id": 8,
+      "title": "Postura Corporal 📏",
+      "message": "Mantén una buena postura al sentarte y caminar. Previene dolores de espalda y mejora tu apariencia.",
+      "category": "postura"
+    },
+    {
+      "id": 9,
+      "title": "Vitamina D ☀️",
+      "message": "Expón tu piel al sol de forma segura durante 10-15 minutos diarios para sintetizar vitamina D.",
+      "category": "vitaminas"
+    },
+    {
+      "id": 10,
+      "title": "Salud Mental 🧠",
+      "message": "Habla de tus emociones con personas de confianza. La salud mental es tan importante como la física.",
+      "category": "salud_mental"
+    },
+    {
+      "id": 11,
+      "title": "Reducir Azúcar 🍬",
+      "message": "Limita el consumo de azúcares refinados. El exceso de azúcar puede causar diabetes y obesidad.",
+      "category": "nutricion"
+    },
+    {
+      "id": 12,
+      "title": "Caminar Más 🚶‍♀️",
+      "message": "Usa las escaleras en lugar del ascensor y camina cuando sea posible. Cada paso cuenta para tu salud.",
+      "category": "ejercicio"
+    },
+    {
+      "id": 13,
+      "title": "Frutas de Temporada 🍎",
+      "message": "Consume frutas de temporada locales. Son más frescas, nutritivas y accesibles económicamente.",
+      "category": "nutricion"
+    },
+    {
+      "id": 14,
+      "title": "Tiempo de Pantalla 📱",
+      "message": "Toma descansos de 20-30 minutos de las pantallas cada hora. Protege tu vista y reduce la fatiga.",
+      "category": "digital"
+    },
+    {
+      "id": 15,
+      "title": "Evitar Hábitos Dañinos 🚭",
+      "message": "Evita fumar y beber alcohol en exceso. Estos hábitos dañan gravemente tu salud a largo plazo.",
+      "category": "habitos"
+    },
+    {
+      "id": 16,
+      "title": "Protección Solar ☂️",
+      "message": "Usa protector solar todos los días, incluso en días nublados. Protege tu piel del daño solar.",
+      "category": "piel"
+    },
+    {
+      "id": 17,
+      "title": "Respiración Profunda 🌬️",
+      "message": "Practica respiración diafragmática 5 minutos al día. Reduce el estrés y mejora tu bienestar.",
+      "category": "respiracion"
+    },
+    {
+      "id": 18,
+      "title": "Desayuno Nutritivo 🌅",
+      "message": "Nunca te saltes el desayuno. Es la comida más importante del día y activa tu metabolismo.",
+      "category": "nutricion"
+    },
+    {
+      "id": 19,
+      "title": "Conexión Social 👥",
+      "message": "Mantén relaciones sociales saludables. Las conexiones humanas son esenciales para tu bienestar.",
+      "category": "social"
+    },
+    {
+      "id": 20,
+      "title": "Espinacas y Verduras 🥬",
+      "message": "Incluye verduras de hoja verde como espinacas en tu dieta. Son ricas en vitaminas y minerales.",
+      "category": "nutricion"
+    },
+    {
+      "id": 21,
+      "title": "Estiramiento Matutino 🧘‍♂️",
+      "message": "Haz estiramientos suaves al levantarte. Ayuda a despertar tu cuerpo y mejora la flexibilidad.",
+      "category": "ejercicio"
+    },
+    {
+      "id": 22,
+      "title": "Omega-3 🐟",
+      "message": "Consume pescados grasos o nueces regularmente. Los ácidos grasos Omega-3 apoyan la salud cerebral.",
+      "category": "nutricion"
+    },
+    {
+      "id": 23,
+      "title": "Meditación 🕯️",
+      "message": "Dedica 10 minutos diarios a la meditación. Calma tu mente y reduce la ansiedad.",
+      "category": "meditacion"
+    },
+    {
+      "id": 24,
+      "title": "Higiene del Sueño 🌙",
+      "message": "Evita pantallas 1 hora antes de dormir. La luz azul interfiere con la producción de melatonina.",
+      "category": "sueno"
+    },
+    {
+      "id": 25,
+      "title": "Sonrisa Espontánea 😊",
+      "message": "Sonreír frecuentemente, incluso sin motivo, reduce el estrés y mejora tu estado de ánimo.",
+      "category": "emocional"
+    },
+    {
+      "id": 26,
+      "title": "Agua con Limón 🍋",
+      "message": "Empieza el día con agua tibia y limón. Hidrata, aporta vitamina C y alcaliniza tu cuerpo.",
+      "category": "hidratacion"
+    },
+    {
+      "id": 27,
+      "title": "Postura al Trabajar 💻",
+      "message": "Coloca tu pantalla a la altura de los ojos y mantén los pies apoyados en el suelo mientras trabajas.",
+      "category": "postura"
+    },
+    {
+      "id": 28,
+      "title": "Aire Fresco 🌿",
+      "message": "Pasa tiempo al aire libre diariamente. Mejora tu estado de ánimo y sintetiza vitamina D.",
+      "category": "aire_libre"
+    },
+    {
+      "id": 29,
+      "title": "Gratitud 📝",
+      "message": "Escribe 3 cosas por las que te sientes agradecido cada día. La gratitud mejora tu bienestar emocional.",
+      "category": "emocional"
+    },
+    {
+      "id": 30,
+      "title": "Té Verde 🍵",
+      "message": "Bebe té verde regularmente. Es rico en antioxidantes y puede ayudar a prevenir enfermedades.",
+      "category": "bebidas"
+    }
+  ],
+  "lastUpdated": "2024-01-01",
+  "version": "1.0"
+}

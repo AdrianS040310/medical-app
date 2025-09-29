@@ -1,9 +1,17 @@
-import React from "react";
+import { HealthTip, getDailyHealthTip } from "@/utils/health-tips";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Avatar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
+  const [currentTip, setCurrentTip] = useState<HealthTip | null>(null);
+
+  useEffect(() => {
+    const initialTip = getDailyHealthTip();
+    setCurrentTip(initialTip);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -20,16 +28,73 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View style={styles.healthTipCard}>
-          <Text style={styles.healthTipTitle}>Consejo de Salud 🥗</Text>
-          <Text style={styles.healthTipCategory}>Alimentación</Text>
-          <Text style={styles.healthTipText}>
-            Incluye frutas y verduras frescas en cada comida del día.
-          </Text>
-        </View>
+        {currentTip && (
+          <View style={styles.healthTipCard}>
+            <View style={styles.tipHeader}>
+              <Text style={styles.healthTipTitle}>
+                Consejo de Salud {getCategoryEmoji(currentTip.category)}
+              </Text>
+              <Text style={styles.healthTipCategory}>
+                {capitalizeCategory(currentTip.category)}
+              </Text>
+            </View>
+
+            <Text style={styles.healthTipText}>{currentTip.message}</Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
+}
+
+function getCategoryEmoji(category: string): string {
+  const emojiMap: { [key: string]: string } = {
+    hidratacion: "💧",
+    sueno: "😴",
+    ejercicio: "🏃‍♀️",
+    nutricion: "🥗",
+    estres: "🧘‍♀️",
+    higiene: "🧽",
+    prevencion: "🩺",
+    postura: "📏",
+    vitaminas: "☀️",
+    salud_mental: "🧠",
+    digital: "📱",
+    habitos: "🚭",
+    piel: "☂️",
+    respiracion: "🌬️",
+    social: "👥",
+    meditacion: "🕯️",
+    emocional: "😊",
+    aire_libre: "🌿",
+    bebidas: "🍵",
+  };
+  return emojiMap[category] || "💡";
+}
+
+function capitalizeCategory(category: string): string {
+  const categoryMap: { [key: string]: string } = {
+    hidratacion: "Hidratación",
+    sueno: "Sueño",
+    ejercicio: "Ejercicio",
+    nutricion: "Nutrición",
+    estres: "Manejo de Estrés",
+    higiene: "Higiene",
+    prevencion: "Prevención",
+    postura: "Postura Corporal",
+    vitaminas: "Vitaminas",
+    salud_mental: "Salud Mental",
+    digital: "Salud Digital",
+    habitos: "Hábitos Saludables",
+    piel: "Cuidado de la Piel",
+    respiracion: "Respiración",
+    social: "Conexión Social",
+    meditacion: "Meditación",
+    emocional: "Bienestar Emocional",
+    aire_libre: "Vida al Aire Libre",
+    bebidas: "Bebidas Saludables",
+  };
+  return categoryMap[category] || category;
 }
 
 const styles = StyleSheet.create({
@@ -68,26 +133,51 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
+  tipHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
   healthTipTitle: {
     fontSize: 18,
     fontWeight: "700",
     color: "#0D47A1",
-    marginBottom: 6,
+    flex: 1,
+  },
+  modeButton: {
+    backgroundColor: "#0D47A1",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+  },
+  modeButtonText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "600",
   },
   healthTipCategory: {
     fontSize: 14,
     fontWeight: "600",
     color: "#2E7D32",
-    marginBottom: 4,
-  },
-  healthTipText: {
-    fontSize: 14,
-    color: "#333",
     marginBottom: 8,
   },
-  healthTipFooter: {
-    fontSize: 12,
-    fontStyle: "italic",
-    color: "#777",
+  healthTipText: {
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 16,
+    lineHeight: 22,
+  },
+  refreshButton: {
+    backgroundColor: "#E8F5E8",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  refreshButtonText: {
+    color: "#2E7D32",
+    fontSize: 14,
+    fontWeight: "600",
   },
 });
