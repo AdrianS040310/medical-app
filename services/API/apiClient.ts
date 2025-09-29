@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { encrypt, decrypt } from '../../utils/crypto';
+import { decrypt, encrypt } from '../../utils/crypto';
+import { ExpoStorage } from '../ExpoStorage';
 
 const API_CONFIG = {
-baseURL: 'http://192.168.1.66:3000/api',
+  baseURL: 'http://192.168.1.5:3000',
   timeout: 10000,
 };
 
@@ -11,14 +12,14 @@ const apiClient = axios.create({
   timeout: API_CONFIG.timeout,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
 });
 
 // 🔐 Lista de rutas que requieren cifrado
 const ENCRYPTED_ROUTES = [
-  '/test-encryption',
-  '/users/login',
+  '/users/encrypt/me',
+  '/users/encrypt/validateTokenGoogle',
   '/users/register',
   // Agrega aquí más rutas que necesiten cifrado
 ];
@@ -33,32 +34,34 @@ const requiresEncryption = (url?: string): boolean => {
 // INTERCEPTOR REQUEST - Cifrar datos salientes
 // ========================================
 apiClient.interceptors.request.use(
-  (config) => {
-    
+  async config => {
     if (requiresEncryption(config.url) && config.data) {
-      
       try {
         const encryptedData = encrypt(JSON.stringify(config.data));
         config.data = { data: encryptedData };
-        
       } catch (error) {
         throw new Error('Error al cifrar los datos de la petición');
       }
     }
-    
+
+    const token = await ExpoStorage.getToken();
+    console.log('Token para petición:', token);
+    if (token) {
+      config.headers.set('Authorization', `Bearer ${token}`);
+    }
+
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // ========================================
 // INTERCEPTOR RESPONSE - Descifrar datos entrantes
 // ========================================
 apiClient.interceptors.response.use(
-  (response) => {
-    
+  response => {
     // Si la respuesta viene cifrada (tiene estructura { data: "encrypted_string" })
     if (response.data?.data && typeof response.data.data === 'string') {
       try {
@@ -70,18 +73,18 @@ apiClient.interceptors.response.use(
         console.warn('⚠️ Devolviendo respuesta sin descifrar');
       }
     }
-    
+
     return response;
   },
-  (error) => {
+  error => {
     console.error('❌ Error en response:', {
       url: error.config?.url,
       status: error.response?.status,
       message: error.message,
-      data: error.response?.data
+      data: error.response?.data,
     });
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;
