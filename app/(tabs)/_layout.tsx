@@ -44,11 +44,11 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="News"
+        name="map"
         options={{
-          title: "Noticias",
+          title: "Mapa",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="newspaper" size={size}  color={color} />
+            <Ionicons name="map" size={size}  color={color} />
           ),
         }}
       />
