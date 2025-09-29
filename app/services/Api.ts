@@ -1,12 +1,11 @@
 // services/newsApi.ts
-const API_KEY = "c87ccffcd9d246939bb8a62836fb334b";
 
 export async function getHealthNews() {
   try {
-    const url = `https://newsapi.org/v2/everything?q=health%20OR%20medicine&language=es&apiKey=${API_KEY}`;
+    const url = `https://newsapi.org/v2/everything?q=health%20OR%20medicine&language=es&apiKey=${NEWS_API_KEY}`;
     const response = await fetch(url);
 
-    // ❌ Si la API responde con error (ej: 401, 429, 500, etc.)
+    // 👀 Verifica si la API responde con un error HTTP
     if (!response.ok) {
       return {
         success: false,
@@ -28,7 +27,7 @@ export async function getHealthNews() {
       };
     }
   } catch (error) {
-    // 🔹 Error de conexión, sin internet o timeout
+    // 👀 Error de conexión, sin internet o timeout
     return {
       success: false,
       error: "No hay conexión a internet o la API no respondió.",
