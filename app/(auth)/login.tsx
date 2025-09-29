@@ -1,11 +1,16 @@
 import { Image } from "expo-image";
-import { Link } from "expo-router";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Link, router } from "expo-router";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function LoginScreen() {
   return (
     <View style={styles.container}>
-      {/* Logo con texto */}
       <View style={styles.logoContainer}>
         <Image
           source={require("@/assets/images/medical-logo.webp")}
@@ -14,7 +19,6 @@ export default function LoginScreen() {
         <Text style={styles.logoText}>Medical</Text>
       </View>
 
-      {/* Círculos superpuestos */}
       <View style={styles.overlappingCircles}>
         <View style={[styles.circle, styles.centerCircle]}>
           <Image
@@ -36,7 +40,6 @@ export default function LoginScreen() {
         </View>
       </View>
 
-      {/* Formulario */}
       <View style={styles.form}>
         <Text style={styles.title}>Bienvenido de Nuevo 👋</Text>
         <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
@@ -53,18 +56,19 @@ export default function LoginScreen() {
           style={styles.input}
         />
 
-        <TouchableOpacity style={styles.signInButton}>
+        <TouchableOpacity
+          style={styles.signInButton}
+          onPress={() => router.push("/(tabs)")}
+        >
           <Text style={styles.signInButtonText}>Iniciar</Text>
         </TouchableOpacity>
 
-        {/* Separador */}
         <View style={styles.separatorContainer}>
           <View style={styles.separator} />
           <Text style={styles.separatorText}>o</Text>
           <View style={styles.separator} />
         </View>
 
-        {/* Botón de Google */}
         <TouchableOpacity style={styles.googleButton}>
           <Image
             source={require("@/assets/images/google-icon.webp")}
@@ -73,7 +77,6 @@ export default function LoginScreen() {
           <Text style={styles.googleButtonText}>Continua con Google</Text>
         </TouchableOpacity>
 
-        {/* Link a Sign Up */}
         <Text style={styles.footerText}>
           ¿No tienes una cuenta?{" "}
           <Link href="/registro" style={styles.link}>
@@ -93,7 +96,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
 
-  
   logoContainer: {
     alignItems: "center",
     marginBottom: 20,
@@ -109,7 +111,6 @@ const styles = StyleSheet.create({
     color: "#2D6CDF",
     marginTop: 6,
   },
-
 
   overlappingCircles: {
     width: "100%",
@@ -149,7 +150,6 @@ const styles = StyleSheet.create({
     top: 100,
     zIndex: 1,
   },
-
 
   form: {
     backgroundColor: "#fff",
