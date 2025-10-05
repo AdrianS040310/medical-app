@@ -1,6 +1,6 @@
+import { useAuth } from '@/hooks/use-auth';
 import { apiRequests } from '@/services/API/apiRequests';
 import { endpoints } from '@/services/API/endpoints';
-import { ExpoStorage } from '@/services/ExpoStorage';
 import { UserData } from '@/types/auth';
 import { HealthTip, getDailyHealthTip } from '@/utils/health-tips';
 import { useRouter } from 'expo-router';
@@ -12,26 +12,62 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function HomeScreen() {
   const [currentTip, setCurrentTip] = useState<HealthTip | null>(null);
   const [userData, setUserData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const router = useRouter();
+  const { requireAuth, logout } = useAuth();
 
   useEffect(() => {
-    ExpoStorage.getToken().then((token: string | null) => {
-      if (!token) {
-        router.replace('/(auth)/login');
-      }
-      apiRequests.get<UserData>(endpoints.usersEncryption.getUser()).then(response => {
-        if (response.success) {
-          setUserData(response?.data?.data);
-        } else {
-          console.log('Error al obtener datos del usuario:', response.error);
-          // Si hay error, redirigir al login
-          router.replace('/(auth)/login');
+    if (hasLoaded) return;
+
+    const checkAuthAndLoadData = async () => {
+      try {
+        const { ExpoStorage } = await import('@/services/ExpoStorage');
+        const token = await ExpoStorage.getToken();
+
+        if (!token) {
+          await logout();
+          return;
         }
-      });
-    });
+
+        const response = await apiRequests.get<UserData>(endpoints.usersEncryption.getUser());
+
+        if (response.success && response.data) {
+          setUserData(response.data.data);
+        } else {
+          if (
+            response.statusCode === 401 ||
+            response.error?.includes('401') ||
+            response.error?.includes('Unauthorized')
+          ) {
+            await logout();
+            return;
+          }
+        }
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('401')) {
+          await logout();
+        }
+      } finally {
+        setIsLoading(false);
+        setHasLoaded(true);
+      }
+    };
+
+    checkAuthAndLoadData();
     const initialTip = getDailyHealthTip();
     setCurrentTip(initialTip);
-  }, [router]);
+  }, [hasLoaded, logout]);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={[styles.container, styles.loadingContainer]}>
+          <Text style={styles.loadingText}>Cargando...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -120,6 +156,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e1f2fd',
     padding: 12,
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#0D47A1',
+    fontWeight: '600',
   },
   header: {
     flexDirection: 'row',

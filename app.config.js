@@ -5,7 +5,7 @@ module.exports = {
     version: "1.0.0",
     scheme: 'medicalapp',
     orientation: "portrait",
-    icon: "./assets/images/icon.png",
+    icon: "@/assets/images/medical-logo.webp",
     userInterfaceStyle: "automatic",
     newArchEnabled: false,
     ios: {
@@ -14,9 +14,9 @@ module.exports = {
     android: {
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",
-        foregroundImage: "./assets/images/android-icon-foreground.png",
-        backgroundImage: "./assets/images/android-icon-background.png",
-        monochromeImage: "./assets/images/android-icon-monochrome.png"
+        foregroundImage: "@/assets/images/medical-logo.webp",
+        backgroundImage: "@/assets/images/medical-logo.webp",
+        monochromeImage: "@/assets/images/medical-logo.webp"
       },
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
@@ -24,14 +24,14 @@ module.exports = {
     },
     web: {
       output: "static",
-      favicon: "./assets/images/favicon.png"
+      favicon: "@/assets/images/medical-logo.webp"
     },
     plugins: [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          image: "./assets/images/splash-icon.png",
+          image: "@/assets/images/medical-logo.webp",
           imageWidth: 200,
           resizeMode: "contain",
           backgroundColor: "#ffffff",

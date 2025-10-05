@@ -6,6 +6,7 @@ export async function getHealthNews() {
   try {
     const url = `https://newsapi.org/v2/everything?q=health%20OR%20medicine&language=es&apiKey=${apiKeyNews}`;
     const response = await fetch(url);
+    console.log("🚀 ~ response:", response);
 
     if (!response.ok) {
       return {

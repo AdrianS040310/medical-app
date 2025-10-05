@@ -84,6 +84,13 @@ apiClient.interceptors.response.use(
       message: error.message,
       data: error.response?.data,
     });
+    
+    // Manejo específico para errores 401
+    if (error.response?.status === 401) {
+      console.log('🔐 Error 401 - Token no válido o expirado');
+      // No limpiar automáticamente el token aquí, dejar que cada componente lo maneje
+    }
+    
     return Promise.reject(error);
   },
 );
