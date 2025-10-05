@@ -64,15 +64,6 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado:
    npm run ios
    ```
 
-### Scripts disponibles
-
-```bash
-npm start          # Inicia el servidor de desarrollo de Expo
-npm run android    # Ejecuta en dispositivo/emulador Android
-npm run ios        # Ejecuta en dispositivo/simulador iOS
-npm run web        # Ejecuta en navegador web
-npm run lint       # Ejecuta el linter de ESLint
-```
 
 ## 📦 Dependencias y Librerías utilizadas
 
@@ -241,6 +232,15 @@ const HealthNewsScreen = () => {
   // Renderizar componente...
 };
 ```
+## 🧪 Pruebas
+
+Para ejecutar las pruebas, utiliza:
+
+```bash
+npm test
+# o
+yarn test
+```
 
 ### Parámetros de la API
 
@@ -299,12 +299,6 @@ medical-app/
    # Limpia la caché de Expo
    expo start --clear
    ```
-
-### Límites de la API News
-
-- **Plan gratuito:** 1,000 requests por mes
-- **Rate limit:** 1,000 requests por día
-- **Artículos:** Máximo 100 resultados por request
 
 ## 📄 Licencia
 
