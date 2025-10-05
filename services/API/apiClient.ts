@@ -1,9 +1,10 @@
+import { API_URL } from '@env';
 import axios from 'axios';
 import { decrypt, encrypt } from '../../utils/crypto';
 import { ExpoStorage } from '../ExpoStorage';
 
 const API_CONFIG = {
-  baseURL: 'http://192.168.1.5:3000',
+  baseURL: API_URL as string,
   timeout: 10000,
 };
 
