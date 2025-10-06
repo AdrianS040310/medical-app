@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 module.exports = {
   expo: {
     name: "medical-app",
@@ -5,7 +7,7 @@ module.exports = {
     version: "1.0.0",
     scheme: 'medicalapp',
     orientation: "portrait",
-    icon: "@/assets/images/medical-logo.webp",
+    icon: "./assets/images/medical-logo.webp",
     userInterfaceStyle: "automatic",
     newArchEnabled: false,
     ios: {
@@ -14,9 +16,9 @@ module.exports = {
     android: {
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",
-        foregroundImage: "@/assets/images/medical-logo.webp",
-        backgroundImage: "@/assets/images/medical-logo.webp",
-        monochromeImage: "@/assets/images/medical-logo.webp"
+        foregroundImage: "./assets/images/medical-logo.webp",
+        backgroundImage: "./assets/images/medical-logo.webp",
+        monochromeImage: "./assets/images/medical-logo.webp"
       },
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
@@ -24,14 +26,14 @@ module.exports = {
     },
     web: {
       output: "static",
-      favicon: "@/assets/images/medical-logo.webp"
+      favicon: "./assets/images/medical-logo.webp"
     },
     plugins: [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          image: "@/assets/images/medical-logo.webp",
+          image: "./assets/images/medical-logo.webp",
           imageWidth: 200,
           resizeMode: "contain",
           backgroundColor: "#ffffff",
@@ -43,7 +45,7 @@ module.exports = {
       [
         "@react-native-google-signin/google-signin",
         {
-          iosUrlScheme: process.env.GOOGLE_IOS_URL_SCHEME
+          iosUrlScheme: process.env.EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME
         }
       ]
     ],
@@ -52,6 +54,7 @@ module.exports = {
     },
     extra: {
       EXPO_PUBLIC_CRYPTO_SECRET: process.env.EXPO_PUBLIC_CRYPTO_SECRET,
+      EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME: process.env.EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME,
       router: {},
       eas: {
         projectId: process.env.EAS_PROJECT_ID
