@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from '../api/apiClient';
 
 // Tipos para las respuestas
 export interface ApiResponse<T = any> {
@@ -18,22 +18,22 @@ const handleRequest = async <T>(request: Promise<any>): Promise<ApiResponse<T>> 
     };
   } catch (error: any) {
     console.error('❌ Error en handleRequest:', error);
-    
+
     // Manejo específico para diferentes tipos de errores
     let errorMessage = 'Error desconocido';
     let statusCode = null;
-    
+
     if (error.response) {
       // Error de respuesta del servidor
       statusCode = error.response.status;
       const data = error.response.data;
-      
+
       console.log(`🔍 Error HTTP ${statusCode}:`, {
         url: error.config?.url,
         data: data,
-        message: data?.message
+        message: data?.message,
       });
-      
+
       if (statusCode === 401) {
         errorMessage = 'No autorizado - Token inválido o expirado';
         console.log('🔐 Error 401 detectado - Token posiblemente expirado o inválido');
@@ -55,7 +55,7 @@ const handleRequest = async <T>(request: Promise<any>): Promise<ApiResponse<T>> 
       errorMessage = error.message || 'Error desconocido';
       console.log('❓ Otro tipo de error:', error.message);
     }
-    
+
     return {
       success: false,
       error: errorMessage,

@@ -1,6 +1,6 @@
 import { useAuth } from '@/hooks/use-auth';
-import { apiRequests } from '@/services/API/apiRequests';
-import { endpoints } from '@/services/API/endpoints';
+import { apiRequests } from '@/services/api/apiRequests';
+import { endpoints } from '@/services/api/endpoints';
 import { UserData } from '@/types/auth';
 import { HealthTip, getDailyHealthTip } from '@/utils/health-tips';
 import { useRouter } from 'expo-router';
@@ -22,7 +22,7 @@ export default function HomeScreen() {
 
     const checkAuthAndLoadData = async () => {
       try {
-        const { ExpoStorage } = await import('@/services/ExpoStorage');
+        const { ExpoStorage } = await import('@/services/ExpoStorage/index');
         const token = await ExpoStorage.getToken();
 
         if (!token) {

@@ -1,8 +1,8 @@
-import apiClient from '../../services/API/apiClient';
-import { apiRequests, ApiResponse } from '../../services/API/apiRequests';
+import apiClient from '../../services/api/apiClient';
+import { apiRequests, ApiResponse } from '../../services/api/apiRequests';
 
 // Mock del apiClient
-jest.mock('../../services/API/apiClient', () => ({
+jest.mock('../../services/api/apiClient', () => ({
   get: jest.fn(),
   post: jest.fn(),
   put: jest.fn(),
