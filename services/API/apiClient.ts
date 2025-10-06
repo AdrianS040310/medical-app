@@ -20,7 +20,7 @@ const apiClient = axios.create({
 // 🔐 Lista de rutas que requieren cifrado
 const ENCRYPTED_ROUTES = [
   '/users/encrypt/me',
-  '/login/encrypt/validateTokenGoogle', // Corregido: debe coincidir con el endpoint del frontend
+  '/login/encrypt/validateTokenGoogle',
   '/users/register',
   // Agrega aquí más rutas que necesiten cifrado
 ];
