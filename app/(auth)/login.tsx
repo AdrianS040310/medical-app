@@ -1,5 +1,5 @@
-import { apiRequests } from '@/services/API/apiRequests';
-import { endpoints } from '@/services/API/endpoints';
+import { apiRequests } from '@/services/api/apiRequests';
+import { endpoints } from '@/services/api/endpoints';
 import { ExpoStorage } from '@/services/ExpoStorage';
 import { GoogleLoginRequest, LoginResponse } from '@/types/auth';
 import {

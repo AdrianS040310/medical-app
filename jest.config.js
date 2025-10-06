@@ -36,7 +36,6 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
-    '^@env$': '<rootDir>/jest.setup.js',
     '^@/(.*)$': '<rootDir>/$1',
   },
 };

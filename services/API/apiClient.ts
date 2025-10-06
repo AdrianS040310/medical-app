@@ -1,10 +1,10 @@
-import { API_URL } from '@env';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { decrypt, encrypt } from '../../utils/crypto';
 import { ExpoStorage } from '../ExpoStorage';
 
 const API_CONFIG = {
-  baseURL: API_URL as string,
+  baseURL: Constants.expoConfig?.extra?.EXPO_PUBLIC_API_URL || 'http://localhost:3000',
   timeout: 10000,
 };
 
@@ -20,7 +20,7 @@ const apiClient = axios.create({
 // 🔐 Lista de rutas que requieren cifrado
 const ENCRYPTED_ROUTES = [
   '/users/encrypt/me',
-  '/users/encrypt/validateTokenGoogle',
+  '/login/encrypt/validateTokenGoogle',
   '/users/register',
   // Agrega aquí más rutas que necesiten cifrado
 ];
@@ -39,6 +39,7 @@ apiClient.interceptors.request.use(
     if (requiresEncryption(config.url) && config.data) {
       try {
         const encryptedData = encrypt(JSON.stringify(config.data));
+
         config.data = { data: encryptedData };
       } catch (error) {
         throw new Error('Error al cifrar los datos de la petición');
@@ -46,7 +47,6 @@ apiClient.interceptors.request.use(
     }
 
     const token = await ExpoStorage.getToken();
-    console.log('Token para petición:', token);
     if (token) {
       config.headers.set('Authorization', `Bearer ${token}`);
     }
@@ -67,9 +67,9 @@ apiClient.interceptors.response.use(
     if (response.data?.data && typeof response.data.data === 'string') {
       try {
         const decryptedData = decrypt(response.data.data);
+
         response.data = JSON.parse(decryptedData);
       } catch (error) {
-        console.error('❌ Error al descifrar respuesta:', error);
         // Si falla el descifrado, devolver la respuesta original
         console.warn('⚠️ Devolviendo respuesta sin descifrar');
       }
@@ -78,19 +78,12 @@ apiClient.interceptors.response.use(
     return response;
   },
   error => {
-    console.error('❌ Error en response:', {
-      url: error.config?.url,
-      status: error.response?.status,
-      message: error.message,
-      data: error.response?.data,
-    });
-    
     // Manejo específico para errores 401
     if (error.response?.status === 401) {
       console.log('🔐 Error 401 - Token no válido o expirado');
       // No limpiar automáticamente el token aquí, dejar que cada componente lo maneje
     }
-    
+
     return Promise.reject(error);
   },
 );

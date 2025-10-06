@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { apiRequests, ApiResponse } from '../../services/API/apiRequests';
+import { apiRequests, ApiResponse } from '../../services/api/apiRequests';
 import { decrypt, encrypt } from '../../utils/crypto';
 
 // Mock de crypto-js
