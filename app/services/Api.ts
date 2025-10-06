@@ -1,6 +1,7 @@
-import { NEWS_API_KEY } from '@env';
+import Constants from 'expo-constants';
 
-const apiKeyNews = NEWS_API_KEY;
+const apiKeyNews = Constants.expoConfig?.extra?.EXPO_PUBLIC_NEWS_API_KEY;
+console.log("🚀 ~ apiKeyNews:", apiKeyNews);
 
 export async function getHealthNews() {
   try {

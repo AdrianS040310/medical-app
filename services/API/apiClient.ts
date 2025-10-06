@@ -1,10 +1,10 @@
-import { API_URL } from '@env';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { decrypt, encrypt } from '../../utils/crypto';
 import { ExpoStorage } from '../ExpoStorage';
 
 const API_CONFIG = {
-  baseURL: API_URL as string,
+  baseURL: Constants.expoConfig?.extra?.EXPO_PUBLIC_API_URL || 'http://localhost:3000',
   timeout: 10000,
 };
 
@@ -84,13 +84,13 @@ apiClient.interceptors.response.use(
       message: error.message,
       data: error.response?.data,
     });
-    
+
     // Manejo específico para errores 401
     if (error.response?.status === 401) {
       console.log('🔐 Error 401 - Token no válido o expirado');
       // No limpiar automáticamente el token aquí, dejar que cada componente lo maneje
     }
-    
+
     return Promise.reject(error);
   },
 );
