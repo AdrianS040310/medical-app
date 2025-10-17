@@ -1,3 +1,4 @@
+import { getHealthNews } from '@/services/NewsApi';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -10,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getHealthNews } from '../services/Api';
 
 const HealthNewsScreen = () => {
   const [news, setNews] = useState<any[]>([]);

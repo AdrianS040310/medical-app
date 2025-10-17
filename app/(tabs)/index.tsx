@@ -22,8 +22,8 @@ export default function HomeScreen() {
 
     const checkAuthAndLoadData = async () => {
       try {
-        const { ExpoStorage } = await import('@/services/ExpoStorage/index');
-        const token = await ExpoStorage.getToken();
+        const { SecureStorage } = await import('@/services/SecureStorage/index');
+        const token = await SecureStorage.getToken();
 
         if (!token) {
           await logout();

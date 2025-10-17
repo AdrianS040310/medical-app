@@ -1,6 +1,6 @@
-import { Image } from "expo-image";
-import { Link } from "expo-router";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image } from 'expo-image';
+import { Link } from 'expo-router';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function SignupScreen() {
   return (
@@ -8,8 +8,9 @@ export default function SignupScreen() {
       {/* Logo con texto */}
       <View style={styles.logoContainer}>
         <Image
-          source={require("@/assets/images/medical-logo.webp")}
+          source={require('@/assets/images/medical-logo.webp')}
           style={styles.logo}
+          contentFit="contain"
         />
         <Text style={styles.logoText}>Medical</Text>
       </View>
@@ -18,20 +19,23 @@ export default function SignupScreen() {
       <View style={styles.overlappingCircles}>
         <View style={[styles.circle, styles.centerCircle]}>
           <Image
-            source={require("@/assets/images/doctor.webp")}
+            source={require('@/assets/images/doctor.webp')}
             style={styles.circleImage}
+            contentFit="cover"
           />
         </View>
         <View style={[styles.circle, styles.topLeftCircle]}>
           <Image
-            source={require("@/assets/images/hospital.webp")}
+            source={require('@/assets/images/hospital.webp')}
             style={styles.circleImage}
+            contentFit="cover"
           />
         </View>
         <View style={[styles.circle, styles.bottomRightCircle]}>
           <Image
-            source={require("@/assets/images/surgery.webp")}
+            source={require('@/assets/images/surgery.webp')}
             style={styles.circleImage}
+            contentFit="cover"
           />
         </View>
       </View>
@@ -41,11 +45,7 @@ export default function SignupScreen() {
         <Text style={styles.title}>Crea tu Cuenta ✨</Text>
         <Text style={styles.subtitle}>Regístrate para comenzar</Text>
 
-        <TextInput
-          placeholder="Nombre completo"
-          placeholderTextColor="#999"
-          style={styles.input}
-        />
+        <TextInput placeholder="Nombre completo" placeholderTextColor="#999" style={styles.input} />
         <TextInput
           placeholder="Correo electrónico"
           placeholderTextColor="#999"
@@ -70,10 +70,9 @@ export default function SignupScreen() {
           <Text style={styles.signUpButtonText}>Registrarse</Text>
         </TouchableOpacity>
 
-
         {/* Link a Login */}
         <Text style={styles.footerText}>
-          ¿Ya tienes una cuenta?{" "}
+          ¿Ya tienes una cuenta?{' '}
           <Link href="/login" style={styles.link}>
             Inicia sesión
           </Link>
@@ -86,50 +85,48 @@ export default function SignupScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FCFF",
+    backgroundColor: '#F9FCFF',
     paddingHorizontal: 24,
     paddingTop: 60,
   },
 
   logoContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 20,
   },
   logo: {
     width: 150,
     height: 50,
-    resizeMode: "contain",
   },
   logoText: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#2D6CDF",
+    fontWeight: 'bold',
+    color: '#2D6CDF',
     marginTop: 6,
   },
 
   overlappingCircles: {
-    width: "100%",
+    width: '100%',
     height: 180,
-    position: "relative",
-    alignItems: "center",
+    position: 'relative',
+    alignItems: 'center',
     marginBottom: 30,
   },
   circle: {
-    position: "absolute",
+    position: 'absolute',
     width: 100,
     height: 100,
     borderRadius: 50,
-    overflow: "hidden",
-    backgroundColor: "#eee",
-    shadowColor: "#000",
+    overflow: 'hidden',
+    backgroundColor: '#eee',
+    shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 4,
   },
   circleImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    width: '100%',
+    height: '100%',
   },
   centerCircle: {
     top: 40,
@@ -147,59 +144,59 @@ const styles = StyleSheet.create({
   },
 
   form: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 20,
     borderRadius: 16,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 6,
     elevation: 3,
   },
   title: {
     fontSize: 22,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 6,
   },
   subtitle: {
     fontSize: 14,
-    textAlign: "center",
-    color: "#666",
+    textAlign: 'center',
+    color: '#666',
     marginBottom: 20,
   },
   input: {
-    backgroundColor: "#F1F4F9",
+    backgroundColor: '#F1F4F9',
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 10,
     fontSize: 14,
     marginBottom: 14,
-    color: "#333",
+    color: '#333',
   },
   signUpButton: {
-    backgroundColor: "#2D6CDF",
+    backgroundColor: '#2D6CDF',
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
   },
   signUpButtonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   separatorContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 20,
   },
   footerText: {
     fontSize: 14,
-    textAlign: "center",
-    color: "#333",
+    textAlign: 'center',
+    color: '#333',
   },
   link: {
-    color: "#2D6CDF",
-    fontWeight: "600",
+    color: '#2D6CDF',
+    fontWeight: '600',
   },
 });

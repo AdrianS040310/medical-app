@@ -1,5 +1,5 @@
 import { useAuth } from '@/hooks/use-auth';
-import { ExpoStorage } from '@/services/ExpoStorage';
+import { SecureStorage } from '@/services/SecureStorage';
 import { router } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,7 +12,7 @@ export default function ProfileScreen() {
       await logout();
     } catch (error) {
       try {
-        await ExpoStorage.clearSession();
+        await SecureStorage.clearAll();
         router.push('/(auth)/login');
       } catch (fallbackError) {
         console.error('❌ Error en fallback de logout:', fallbackError);
