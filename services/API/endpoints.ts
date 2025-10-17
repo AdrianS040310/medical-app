@@ -8,9 +8,14 @@ export const endpoints = {
   },
 
   users: {
+    getAll: () => '/users',
+    getById: (id: string) => `/users/${id}`,
+    create: () => '/users',
+    update: (id: string) => `/users/${id}`,
+    delete: (id: string) => `/users/${id}`,
     login: () => '/users/login',
     register: () => '/users/register',
-    profile: () => `/users/me`,
+    profile: () => `/users/profile`,
   },
 
   usersEncryption: {

@@ -1,5 +1,5 @@
-import { apiRequests } from '@/services/API/apiRequests';
-import { endpoints } from '@/services/API/endpoints';
+import { apiRequests } from '@/services/api/apiRequests';
+import { endpoints } from '@/services/api/endpoints';
 import { ExpoStorage } from '@/services/ExpoStorage';
 import { GoogleLoginRequest, LoginResponse } from '@/types/auth';
 import {
@@ -81,7 +81,7 @@ export default function LoginScreen() {
 
           if (tokenJWT) {
             await ExpoStorage.saveToken(tokenJWT);
-            router.push('/(tabs)');
+            router.replace('/(tabs)');
           }
         } else {
           const errorMessage = responseApi.error || 'Error al procesar la respuesta del servidor';
@@ -171,7 +171,9 @@ export default function LoginScreen() {
           disabled={loading}
         >
           <Image source={require('@/assets/images/google-icon.webp')} style={styles.googleIcon} />
-          <Text style={styles.googleButtonText}>Continua con Google</Text>
+          <Text style={styles.googleButtonText}>
+            {loading ? 'Iniciando sesión...' : 'Continua con Google'}
+          </Text>
         </TouchableOpacity>
 
         <Text style={styles.footerText}>

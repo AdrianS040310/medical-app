@@ -30,12 +30,12 @@ export default function TabLayout() {
         }}
       />
 
-      {/* Appointments */}
+      {/* Users */}
       <Tabs.Screen
-        name="appointments"
+        name="users"
         options={{
-          title: 'Citas',
-          tabBarIcon: ({ color, size }) => <Ionicons name="calendar" size={size} color={color} />,
+          title: 'Usuarios',
+          tabBarIcon: ({ color, size }) => <Ionicons name="people" size={size} color={color} />,
         }}
       />
 
