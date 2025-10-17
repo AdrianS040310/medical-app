@@ -21,6 +21,7 @@ export const endpoints = {
   usersEncryption: {
     getUser: () => '/users/encrypt/me',
     login: () => '/login/encrypt/validateTokenGoogle',
+    logout: () => '/login/encrypt/logout',
   },
 
   medical: {

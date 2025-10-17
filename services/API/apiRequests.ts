@@ -1,4 +1,4 @@
-import apiClient from '../api/apiClient';
+import apiClient from './apiClient';
 
 // Tipos para las respuestas
 export interface ApiResponse<T = any> {

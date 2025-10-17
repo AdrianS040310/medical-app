@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Constants from 'expo-constants';
 import { decrypt, encrypt } from '../../utils/crypto';
-import { ExpoStorage } from '../ExpoStorage';
+import { SecureStorage } from '../SecureStorage';
 
 const API_CONFIG = {
   baseURL: Constants.expoConfig?.extra?.EXPO_PUBLIC_API_URL || 'http://localhost:3000',
@@ -46,7 +46,7 @@ apiClient.interceptors.request.use(
       }
     }
 
-    const token = await ExpoStorage.getToken();
+    const token = await SecureStorage.getToken();
     if (token) {
       config.headers.set('Authorization', `Bearer ${token}`);
     }

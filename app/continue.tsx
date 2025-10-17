@@ -1,4 +1,5 @@
-import { ExpoStorage } from '@/services/ExpoStorage';
+import { useAppLock } from '@/hooks/use-app-lock';
+import { SecureStorage } from '@/services/SecureStorage';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
@@ -7,13 +8,15 @@ import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'reac
 export default function ContinueScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const { isLocked } = useAppLock();
 
   useEffect(() => {
     const checkInitialAuth = async () => {
       try {
-        const token = await ExpoStorage.getToken();
+        const token = await SecureStorage.getToken();
 
-        if (token) {
+        if (token && !isLocked) {
+          // Solo redireccionar si hay token Y la app no está bloqueada
           router.replace('/(tabs)');
         } else {
           setIsLoading(false);
@@ -35,12 +38,16 @@ export default function ContinueScreen() {
     };
 
     checkInitialAuth();
-  }, [fadeAnim]);
+  }, [fadeAnim, isLocked]);
 
   if (isLoading) {
     return (
       <View style={styles.loaderContainer}>
-        <Image source={require('@/assets/images/medical-logo.webp')} style={styles.loaderLogo} />
+        <Image
+          source={require('@/assets/images/medical-logo.webp')}
+          style={styles.loaderLogo}
+          contentFit="contain"
+        />
         <Text style={styles.loaderText}>Cargando tu experiencia médica...</Text>
       </View>
     );
@@ -49,7 +56,11 @@ export default function ContinueScreen() {
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <View style={styles.header}>
-        <Image source={require('@/assets/images/medical-logo.webp')} style={styles.logo} />
+        <Image
+          source={require('@/assets/images/medical-logo.webp')}
+          style={styles.logo}
+          contentFit="contain"
+        />
         <Text style={styles.logoText}>Medical</Text>
       </View>
 
@@ -108,7 +119,6 @@ const styles = StyleSheet.create({
   loaderLogo: {
     width: 150,
     height: 60,
-    resizeMode: 'contain',
   },
   loaderText: {
     fontSize: 16,
@@ -123,7 +133,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 140,
     height: 50,
-    resizeMode: 'contain',
   },
   logoText: {
     fontSize: 26,
