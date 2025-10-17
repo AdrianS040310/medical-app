@@ -12,6 +12,12 @@
       },
       "ios": {
         "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://192.168.1.73:3001",
+        "EXPO_PUBLIC_NEWS_API_KEY": "c87ccffcd9d246939bb8a62836fb334b",
+        "EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME": "com.googleusercontent.apps.1058831406641-0p33oqhq3turgrqmij6kjbdc21va0678",
+        "EXPO_PUBLIC_CRYPTO_SECRET": "YhIpeiM7s9OiI3EfWV5i"
       }
     },
     "preview": {

@@ -7,18 +7,18 @@ module.exports = {
     version: "1.0.0",
     scheme: 'medicalapp',
     orientation: "portrait",
-    icon: "./assets/images/medical-logo.webp",
+    icon: "./assets/images/icon.png",
     userInterfaceStyle: "automatic",
-    newArchEnabled: false,
+    newArchEnabled: true,
     ios: {
       supportsTablet: true
     },
     android: {
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",
-        foregroundImage: "./assets/images/medical-logo.webp",
-        backgroundImage: "./assets/images/medical-logo.webp",
-        monochromeImage: "./assets/images/medical-logo.webp"
+        foregroundImage: "./assets/images/android-icon-foreground.png",
+        backgroundImage: "./assets/images/android-icon-background.png",
+        monochromeImage: "./assets/images/android-icon-monochrome.png"
       },
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
@@ -26,14 +26,14 @@ module.exports = {
     },
     web: {
       output: "static",
-      favicon: "./assets/images/medical-logo.webp"
+      favicon: "./assets/images/favicon.png"
     },
     plugins: [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          image: "./assets/images/medical-logo.webp",
+          image: "./assets/images/splash-icon.png",
           imageWidth: 200,
           resizeMode: "contain",
           backgroundColor: "#ffffff",
@@ -45,7 +45,13 @@ module.exports = {
       [
         "@react-native-google-signin/google-signin",
         {
-          iosUrlScheme: process.env.EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME
+          iosUrlScheme: "com.googleusercontent.apps.1058831406641-0p33oqhq3turgrqmij6kjbdc21va0678"
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          faceIDPermission: "Permite a $(PRODUCT_NAME) usar Face ID para autenticación biométrica."
         }
       ]
     ],
@@ -56,10 +62,10 @@ module.exports = {
       EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,
       EXPO_PUBLIC_NEWS_API_KEY: process.env.EXPO_PUBLIC_NEWS_API_KEY,
       EXPO_PUBLIC_CRYPTO_SECRET: process.env.EXPO_PUBLIC_CRYPTO_SECRET,
-      EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME: process.env.EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME,
+      EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME: "com.googleusercontent.apps.1058831406641-0p33oqhq3turgrqmij6kjbdc21va0678",
       router: {},
       eas: {
-        projectId: process.env.EAS_PROJECT_ID
+        projectId: "74029ea5-8beb-462d-95b6-948b6de7d978"
       }
     }
   }

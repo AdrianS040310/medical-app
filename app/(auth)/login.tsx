@@ -1,6 +1,8 @@
+import { useAppLock } from '@/hooks/use-app-lock';
 import { apiRequests } from '@/services/api/apiRequests';
 import { endpoints } from '@/services/api/endpoints';
-import { ExpoStorage } from '@/services/ExpoStorage';
+import { BiometricAuth } from '@/services/BiometricAuth';
+import { SecureStorage } from '@/services/SecureStorage';
 import { GoogleLoginRequest, LoginResponse } from '@/types/auth';
 import {
   GoogleSignin,
@@ -15,6 +17,7 @@ import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } 
 
 export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
+  const { setAppLocked } = useAppLock();
 
   useEffect(() => {
     configureGoogleSignIn();
@@ -71,6 +74,7 @@ export default function LoginScreen() {
           idToken: idToken,
         };
 
+        // 1️⃣ Validar token con tu backend
         const responseApi = await apiRequests.post<LoginResponse>(
           endpoints.usersEncryption.login(),
           loginData,
@@ -80,17 +84,73 @@ export default function LoginScreen() {
           const { token: tokenJWT } = responseApi.data.data;
 
           if (tokenJWT) {
-            await ExpoStorage.saveToken(tokenJWT);
-            router.replace('/(tabs)');
+            // 2️⃣ Verificar disponibilidad de autenticación biométrica
+            const biometricAvailability = await BiometricAuth.isAvailable();
+
+            if (biometricAvailability.available) {
+              // 3️⃣ Ejecutar autenticación biométrica
+              const biometricTypeDescription = biometricAvailability.biometryType
+                ? BiometricAuth.getBiometryTypeDescription(biometricAvailability.biometryType)
+                : 'autenticación biométrica';
+
+              const authResult = await BiometricAuth.authenticate(
+                `Usa tu ${biometricTypeDescription} para confirmar tu identidad`,
+                'Usar código de seguridad',
+                'Cancelar',
+              );
+
+              if (!authResult.success) {
+                Alert.alert(
+                  'Autenticación requerida',
+                  authResult.error || 'La autenticación biométrica es requerida para continuar',
+                );
+                return;
+              }
+
+              // 4️⃣ Si la autenticación biométrica fue exitosa, guardar el token
+              await SecureStorage.saveToken(tokenJWT);
+              await SecureStorage.saveUserData({ user, loginTime: new Date().toISOString() });
+
+              Alert.alert('¡Bienvenido!', 'Autenticación completada exitosamente', [
+                {
+                  text: 'Continuar',
+                  onPress: async () => {
+                    // Inicializar el estado de bloqueo para futuras sesiones
+                    await setAppLocked(false);
+                    router.replace('/(tabs)');
+                  },
+                },
+              ]);
+            } else {
+              // Si no hay biometría disponible, permitir continuar sin MFA
+              console.log('Biometría no disponible:', biometricAvailability.reason);
+
+              Alert.alert(
+                'Autenticación completada',
+                `Login exitoso.\n\nNota: ${biometricAvailability.reason}`,
+                [
+                  {
+                    text: 'Continuar',
+                    onPress: async () => {
+                      await SecureStorage.saveToken(tokenJWT);
+                      await SecureStorage.saveUserData({
+                        user,
+                        loginTime: new Date().toISOString(),
+                      });
+                      // Inicializar el estado de bloqueo para futuras sesiones
+                      await setAppLocked(false);
+                      router.replace('/(tabs)');
+                    },
+                  },
+                ],
+              );
+            }
           }
         } else {
           const errorMessage = responseApi.error || 'Error al procesar la respuesta del servidor';
           Alert.alert('Error', errorMessage);
         }
       }
-
-      // Aquí enviarías el token a tu backend
-      // await sendTokenToBackend(userInfo.idToken);
     } catch (error) {
       let errorMessage = 'Error al iniciar sesión';
 
@@ -123,19 +183,35 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require('@/assets/images/medical-logo.webp')} style={styles.logo} />
+        <Image
+          source={require('@/assets/images/medical-logo.webp')}
+          style={styles.logo}
+          contentFit="contain"
+        />
         <Text style={styles.logoText}>Medical</Text>
       </View>
 
       <View style={styles.overlappingCircles}>
         <View style={[styles.circle, styles.centerCircle]}>
-          <Image source={require('@/assets/images/doctor.webp')} style={styles.circleImage} />
+          <Image
+            source={require('@/assets/images/doctor.webp')}
+            style={styles.circleImage}
+            contentFit="cover"
+          />
         </View>
         <View style={[styles.circle, styles.topLeftCircle]}>
-          <Image source={require('@/assets/images/hospital.webp')} style={styles.circleImage} />
+          <Image
+            source={require('@/assets/images/hospital.webp')}
+            style={styles.circleImage}
+            contentFit="cover"
+          />
         </View>
         <View style={[styles.circle, styles.bottomRightCircle]}>
-          <Image source={require('@/assets/images/surgery.webp')} style={styles.circleImage} />
+          <Image
+            source={require('@/assets/images/surgery.webp')}
+            style={styles.circleImage}
+            contentFit="cover"
+          />
         </View>
       </View>
 
@@ -170,7 +246,11 @@ export default function LoginScreen() {
           onPress={handleOAuth2Login}
           disabled={loading}
         >
-          <Image source={require('@/assets/images/google-icon.webp')} style={styles.googleIcon} />
+          <Image
+            source={require('@/assets/images/google-icon.webp')}
+            style={styles.googleIcon}
+            contentFit="contain"
+          />
           <Text style={styles.googleButtonText}>
             {loading ? 'Iniciando sesión...' : 'Continua con Google'}
           </Text>
@@ -202,7 +282,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 50,
-    resizeMode: 'contain',
   },
   logoText: {
     fontSize: 20,
@@ -233,7 +312,6 @@ const styles = StyleSheet.create({
   circleImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
   },
   centerCircle: {
     top: 40,
@@ -322,7 +400,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginRight: 10,
-    resizeMode: 'contain',
   },
   googleButtonText: {
     fontSize: 15,
